@@ -53,7 +53,7 @@ public class ShulkerDupe extends Module {
 
     @EventHandler
     private void onTick(TickEvent.Pre event) {
-        if (shouldDupe|shouldDupeAll==true){
+        if (shouldDupe|shouldDupeAll){
             if (Modules.get().get(Timer.class).isActive()) {
                 timerWASon=true;
                 Modules.get().get(Timer.class).toggle();
@@ -64,7 +64,7 @@ public class ShulkerDupe extends Module {
                 if (mc.player.getInventory().selectedSlot>8) mc.player.getInventory().selectedSlot=0;
                 }
             }
-        } else if (!shouldDupe|!shouldDupeAll==true){
+        } else if (!shouldDupe|!shouldDupeAll){
             if (!Modules.get().get(Timer.class).isActive() && timerWASon==true) {
                 timerWASon=false;
                 Modules.get().get(Timer.class).toggle();
@@ -86,14 +86,14 @@ public class ShulkerDupe extends Module {
     @EventHandler
     public void onSendPacket(PacketEvent.Sent event) {
         if (event.packet instanceof PlayerActionC2SPacket) {
-            if (shouldDupeAll==true){
+            if (shouldDupeAll){
             if (((PlayerActionC2SPacket) event.packet).getAction() == PlayerActionC2SPacket.Action.STOP_DESTROY_BLOCK) {
                 for (int i = 0; i < 27; i++) {
                     mc.interactionManager.clickSlot(mc.player.currentScreenHandler.syncId, i, 0, SlotActionType.QUICK_MOVE, mc.player);
                 }
                 shouldDupeAll=false;
             }
-            } else if (shouldDupe==true){
+            } else if (shouldDupe){
             if (((PlayerActionC2SPacket) event.packet).getAction() == PlayerActionC2SPacket.Action.STOP_DESTROY_BLOCK) {
                     mc.interactionManager.clickSlot(mc.player.currentScreenHandler.syncId, 0, 0, SlotActionType.QUICK_MOVE, mc.player);
                     shouldDupe=false;
